@@ -15,10 +15,24 @@ app.use(bodyParser.urlencoded({
 app.use(bodyparser.json())
 
 //Conexion a BD
+const uri = `mongodb+srv://Juanhmajo:<password>@cluster0.9w6c7fo.mongodb.net/test`
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Conectado a BD')
+}).catch(e => {
+    console.log('error:', e)
+})
 
 //Importar Rutas
+const authroutes = require('./routes/auth')
 
-//Ruta
+
+
+//Ruta Miidleware
+app.use('./api/user', authroutes)
+
 app.get('/', (req, res) =>{
     res.json({
         estado: true,
